@@ -1,0 +1,27 @@
+name: First workflow
+
+on:
+  push:
+  workflow_dispatch:    # lets you run it manually from the Actions tab
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        run: echo "Hello from GitHub Actions!"
+
+      - name: Look around the runner
+        run: |
+          echo "Running on:        $RUNNER_OS"
+          echo "Triggered by:      $GITHUB_EVENT_NAME"
+          echo "Repository:        $GITHUB_REPOSITORY"
+          echo "Commit SHA:        $GITHUB_SHA"
+          echo "Working directory: $(pwd)"
+          ls -la
+
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: List files now that we've checked out
+        run: ls -la
