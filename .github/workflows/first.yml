@@ -25,4 +25,21 @@ jobs:
 
       - name: List files now that we've checked out
         run: ls -la
-        # testing PR trigger
+      
+  show-data:
+    runs-on: ubuntu-latest
+    env:
+      GREETING: "hello from the workflow"     # workflow-level-ish env var (job scope here)
+    steps:
+      - name: Read an env var
+        env:
+          STEP_VAR: "this one is step-scoped"
+        run: |
+          echo "GREETING is:  $GREETING"
+          echo "STEP_VAR is:  $STEP_VAR"
+
+      - name: Read a context value
+        run: echo "This run was triggered by ${{ github.actor }}"
+
+      - name: Try to read a missing secret
+        run: echo "Secret says: ${{ secrets.MY_FAKE_SECRET }}"
